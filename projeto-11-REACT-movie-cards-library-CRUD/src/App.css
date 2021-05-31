@@ -1,0 +1,195 @@
+body {
+  background-color: rgb(202, 240, 248);
+  box-sizing: border-box;
+  height: 100vh;
+}
+
+a {
+  background-color: rgb(202, 240, 248);
+  border-radius: 25px;
+  color: black;
+  padding: 20px;
+  text-decoration: none;
+}
+
+button {
+  background-color: rgb(144, 224, 239);
+  border-radius: 25px;
+  border-style: solid;
+  color: black;
+  margin: 20px 0 0;
+  padding: 10px 15px;
+  text-decoration: none;
+}
+
+button:hover {
+  background-color: blue;
+}
+
+a:hover {
+  background-color: blue;
+}
+
+.add-btn {
+  align-self: center;
+  background-color: rgb(144, 224, 239);
+  margin-bottom: 30px;
+}
+
+.movie-list-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.movie-list-container h1 {
+  color: rgb(3, 4, 94);
+  font-family: aAbstract;
+  font-size: 50px;
+  font-weight: 500;
+  margin-bottom: 0;
+  margin-top: 20px;
+}
+
+h1 {
+  color: rgb(3, 4, 94)
+}
+
+.movie-list-style {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  padding: 48px 30px;
+}
+
+.movie-card {
+  align-items: center;
+  background-color: rgb(144, 224, 239);
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 10px;
+}
+
+.movie-details-content {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.movie-card-details {
+  align-items: center;
+  background-color: rgb(144, 224, 239);
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  height: 530px;
+  justify-content: center;
+  margin-top: 30px;
+  width: 370px;
+}
+
+.movie-card-details * {
+  margin: 10px;
+}
+
+.movie-details-btn {
+  padding: 5px;
+}
+
+.movie-card * {
+  margin: 15px;
+}
+
+.movie-card-image {
+  border-radius: 10px;
+}
+
+
+.movie-card-title {
+  font-size: 24px;
+  font-weight: 500;
+  margin: 0 0 12px;
+}
+
+.movie-card-subtitle {
+  color: #6c757d;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0 0 8px;
+}
+
+.movie-card-storyline {
+  font-size: 14px;
+  text-align: start;
+  width: 320px;
+}
+
+.form-div {
+  align-items: center;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  width: 100vw;
+}
+
+.form-content {
+  align-items: center;
+  background-color: rgb(144, 224, 239);
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  height: 430px;
+  justify-content: center;
+  width: 380px;
+}
+
+.form-content label {
+  margin: 10px;
+}
+
+.form-content button {
+  background-color: rgb(202, 240, 248);
+}
+
+.form-content button:hover {
+  background-color: blue;
+}
+
+.form-content input {
+  background-color: rgb(202, 240, 248);
+  border-radius: 5px;
+  border-style: solid;
+  margin-left: 5px;
+}
+
+.form-content textarea {
+  background-color: rgb(202, 240, 248);
+  height: 50px;
+  margin-left: 5px;
+  padding: 5px;
+  width: 200px;
+}
+
+.movie-details-textarea {
+  align-items: center;
+  display: flex;
+}
+
+.form-content select {
+  background-color: rgb(202, 240, 248);
+  border-radius: 8px;
+  margin-left: 5px;
+}
+
+.loaging-content {
+  align-items: center;
+  display: flex;
+  font-family: aAbstract;
+  font-size: 55px;
+  height: 100vh;
+  justify-content: center;
+}

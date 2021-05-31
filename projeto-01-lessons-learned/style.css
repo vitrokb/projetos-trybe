@@ -1,0 +1,80 @@
+body {
+  background-color: rgb(253 , 251 , 251);
+  margin: 0;
+  font-family: helvetica, sans-serif;
+}
+
+
+#minha_foto {
+  width: 200px;
+  margin-left: 10px;
+  margin-top: 130px;
+}
+
+#licoes {
+  display: inline-flex;
+  margin-left: 10px;
+}
+
+#unlearned_lessons {
+  margin-left: 30px;
+}
+
+#passage-conteiner {
+  display: flex;
+  flex-direction: row;
+}
+
+#passage {
+  margin: 10px;
+  line-height: 130%;
+}
+
+#learnig_passage {
+  margin-left: 100px;
+  color: red;
+  font-size: 120%;
+}
+
+#rodape {
+  margin-left: 10px;
+}
+
+#tabela {
+  margin-left: 10px;
+}
+
+/* Barra de navegação feita referência de http://www.w3bai.com/pt/css/css_navbar.html  */
+#cabecalho {
+  list-style-type: none;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin: 0;
+  padding: 30px;
+  background-color: rgb(108 , 117 , 125);
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+#titulo {
+  align-self: center;
+  flex-direction: row;
+  justify-content: center;
+}
+
+#nav-list a {
+  text-decoration: none;
+  padding: 15px;
+  color: rgb(248 , 249 , 250);
+  border-right: 2px solid rgb(248 , 249 , 250);
+  border-top: 2px solid rgb(248 , 249 , 250);
+  border-bottom: 2px solid rgb(248 , 249 , 250);
+  border-left: 2px solid rgb(248 , 249 , 250);
+}
+
+#nav-list a:first-child {
+  border-left: 2px solid rgb(248 , 249 , 250);
+}
