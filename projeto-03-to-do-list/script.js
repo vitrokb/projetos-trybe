@@ -1,197 +1,170 @@
 window.onload = recLocalStorage;
 
+const ol = document.getElementById('lista-tarefas');
 // Botão para adicionar elemento a lista.
-let tarefaParaAdc = document.getElementById('texto-tarefa');
-let btnAdc = document.getElementById('criar-tarefa');
-btnAdc.addEventListener('click', adcLista);
+const tarefaParaAdc = document.getElementById('texto-tarefa');
+const btnAdc = document.getElementById('criar-tarefa');
+
+function criaLi(content) {
+  const li = document.createElement('li');
+  li.classList.add('elemento-lista');
+  li.textContent = content;
+  return li;
+}
 
 // Função para adicionar elemento a lista e apagar o que está dentro do input.
 function adcLista() {
-  let elementoLista = document.createElement('li');
-  elementoLista.className = 'elemento-lista';
-  elementoLista.textContent = tarefaParaAdc.value;
-  let lista = document.getElementById('lista-tarefas');
+  const elementoLista = criaLi(tarefaParaAdc.value);
+  const lista = document.getElementById('lista-tarefas');
   lista.appendChild(elementoLista);
   tarefaParaAdc.value = '';
+
+  const storage = JSON.parse(localStorage.getItem('listaDeLi')) || [];
+  storage.push(elementoLista.textContent);
+  localStorage.setItem('listaDeLi', JSON.stringify(storage));
 }
 
+btnAdc.addEventListener('click', adcLista);
 
-// Teste para ver se o elemeno clicado é um li da lista ordenada.
-document.addEventListener('click', function (clique) {
-  if ( clique.target.classList.contains( 'elemento-lista' ) ) {
-      altFundo(clique.target);
+// Teste para ver se o elemeno clicado é um li da lista ordenada e cria
+// a função toggle do background.
+
+document.addEventListener('click', function ({ target }) {
+  const elementoCinza = document.querySelector('.elemento-cinza');
+  if (target.classList.contains('elemento-lista')) {
+    if (elementoCinza) {
+      return elementoCinza.classList.remove('elemento-cinza');
+    } 
+    target.classList.toggle('elemento-cinza');
   }
 }, false);
-
-// Função para alterar o fundo de elemento da lista.
-function altFundo(element) {
-  let listaDeElementos = document.getElementsByClassName('elemento-lista');
-  for (let i = 0; i < listaDeElementos.length; i += 1) {
-    if (listaDeElementos[i].classList.contains('elemento-cinza')) {
-      listaDeElementos[i].classList.remove('elemento-cinza');
-      listaDeElementos[i].style.removeProperty('backgroudColor');
-    }
-  }
-  element.className += ' elemento-cinza';
-}
-
 
 // Outro teste para verificar se o elemento é um li para riscá-lo ou não.
-document.addEventListener('dblclick', function (clique) {
-  if ( clique.target.classList.contains( 'elemento-lista' ) ) {
-      riscaLinha(clique.target);
+document.addEventListener('dblclick', function ({ target }) {
+  if ( target.classList.contains('elemento-lista')) {
+    target.classList.toggle('completed');
   }
 }, false);
 
-// Função para riscar o elemento se for clicado 2 vezes.
-function riscaLinha(li) {
-  let elementList = li;
-  if (elementList.classList.contains('completed')) {
-    elementList.classList.remove('completed');
-    elementList.style.removeProperty('text-decoration')
-  } else {
-    elementList.classList.add('completed');
-    elementList.style.textDecoration = 'line-through';
-  }
-}
-
-
 // Implementação do botão Limpar.
-let apagaTudo = document.getElementById('apaga-tudo');
-apagaTudo.addEventListener('click', limpaLista);
-
-
-// Funçao para limpar lista com o botão apagaTudo.
-function limpaLista() {
-  let ol = document.getElementById('lista-tarefas');
-  let filhos = document.getElementById('lista-tarefas').childNodes;
-  for (let i = filhos.length; i >= filhos.length; i -= 1) {
-    if (ol.children[i - 1]) {
-      ol.removeChild(filhos[i - 1]);
-    }
-  }
-}
-
-
-// Implementação do botão Remover Finalizados.
-let apagaFinalizados = document.getElementById('remover-finalizados');
-apagaFinalizados.addEventListener('click', removeFinalizados);
+document.getElementById('apaga-tudo')
+  .addEventListener('click', function () {
+    ol.innerHTML = '';
+    localStorage.removeItem('listaDeLi');
+  });
 
 
 // Função para remover finalizados.
 function removeFinalizados() {
-  let completados = document.querySelectorAll('.completed');
-  let ol = document.getElementById('lista-tarefas');
-  if (completados.length > 0) {
-    for (let i = 0; i < completados.length; i += 1) {
-      if (completados[i]) {
-        ol.removeChild(completados[i]);
-      }
-    }
-  } else {
-    alert('Não tem tarefas completadas.');
-  }
+  const lis = document.querySelectorAll('.completed');
+  lis.forEach((item) => {
+    ol.removeChild(item);
+  })
 }
 
+// Implementação do botão Remover Finalizados.
+document.getElementById('remover-finalizados')
+  .addEventListener('click', removeFinalizados);
 
-// Implementação do botão salvar.
-let salvaItens = document.getElementById('salvar-tarefas');
-salvaItens.addEventListener('click', salva);
 
 // Função para salvar itens no localstorage.
-function salva() {
-  let listaParaSalvar = document.getElementById('lista-tarefas').children;
-  for (let i = 0; i < listaParaSalvar.length; i += 1) {
-    localStorage.setItem('li' + [i], listaParaSalvar[i].outerHTML);
-  }
+function salvaLocalStorage() {
+  const listaDeLi = [];
+  const listaParaSalvar = document.getElementById('lista-tarefas').childNodes;
+  listaParaSalvar.forEach((item) => {
+    listaDeLi.push(item.textContent);
+  });
+  localStorage.setItem('listaDeLi', JSON.stringify(listaDeLi));
 }
+
+// Implementação do botão salvar.
+document.getElementById('salvar-tarefas')
+  .addEventListener('click', salvaLocalStorage);
+
 
 // Função para recuperar dados do localStorage.
 function recLocalStorage() {
-  let ol = document.getElementById('lista-tarefas');
-  for (let i = 0; i < localStorage.length; i += 1) {
-    let li = localStorage.getItem('li' + [i]);
-    ol.innerHTML += li;
-  }
+  const listaDoStorage = JSON.parse(localStorage.getItem('listaDeLi')) || [];
+  listaDoStorage.forEach((item) => {
+    ol.appendChild(criaLi(item));
+  });
 }
-
-
-// Implementação do botão mover para cima.
-let btnCima = document.getElementById('mover-cima');
-btnCima.addEventListener('click', moveCima);
 
 // Função para mover elemento de lista para cima.
 function moveCima() {
-  let ol = document.getElementById('lista-tarefas');
-  let selecionado = document.getElementsByClassName('elemento-cinza');
-  let lista = document.getElementById('lista-tarefas').childNodes;
-  let listaArray = Array.from(lista);
-  let listaSelecionado = '';
-  if (selecionado.length != 0) {
+  const elementoCinza = document.querySelector('.elemento-cinza');
+  const listaArray = Array.from(document.getElementById('lista-tarefas').childNodes);
+  const indexSelecionado = listaArray.indexOf(elementoCinza);
+  let backupSelecionado = '';
+
+  if (elementoCinza) {
     if (listaArray[0].classList.contains('elemento-cinza')) {
       alert('Elemento não pode subir mais.');
     } else {
-      for (let i = 1; i < listaArray.length; i += 1) {
-        if (listaArray[i].classList.contains('elemento-cinza')) {
-          listaSelecionado = listaArray[i];
-          listaArray.splice([i], 1);
-          listaArray.splice([i - 1], 0, listaSelecionado);
-        }
-      }
-      for (let i = 0; i < listaArray.length; i += 1) {
-        ol.appendChild(listaArray[i]);
-      }
+      backupSelecionado = listaArray[indexSelecionado];
+      listaArray.splice(indexSelecionado, 1);
+      listaArray.splice(indexSelecionado - 1, 0, backupSelecionado);
+      listaArray.forEach((item) => {
+        ol.appendChild(item);
+      })
     }
+  } else {
+    alert('Não há elemento selecionado')
   }
 }
 
+// Implementação do botão mover para cima.
+document.getElementById('mover-cima')
+  .addEventListener('click', moveCima);
 
-// Implementação do botão mover para baixo.
-let btnBaixo = document.getElementById('mover-baixo');
-btnBaixo.addEventListener('click', moveBaixo);
-
-// Função para mover elemento de lista para baixo.
+  
+  // Função para mover elemento de lista para baixo.
 function moveBaixo() {
-  let ol = document.getElementById('lista-tarefas');
-  let selecionado = document.getElementsByClassName('elemento-cinza');
-  let lista = document.getElementById('lista-tarefas').childNodes;
-  let listaArray = Array.from(lista);
-  let listaSelecionado = '';
-  if (selecionado.length != 0) {
+  const elementoCinza = document.querySelector('.elemento-cinza');
+  const listaArray = Array.from(document.getElementById('lista-tarefas').childNodes);
+  const indexSelecionado = listaArray.indexOf(elementoCinza);
+  let backupSelecionado = '';
+  if (elementoCinza) {
     if (listaArray[listaArray.length - 1].classList.contains('elemento-cinza')) {
       alert('Elemento não pode descer mais.');
     } else {
-      for (let i = 0; i < listaArray.length; i += 1) {
-        if (listaArray[i].classList.contains('elemento-cinza')) {
-          listaSelecionado = listaArray[i];
-          listaArray.splice([i], 1);
-          listaArray.splice([i + 1], 0, listaSelecionado);
-          break;
-        }
-      }
-      for (let i = 0; i < listaArray.length; i += 1) {
-        ol.appendChild(listaArray[i]);
-      }
-    }
-  }
-}
-
-
-// Implementação do botão Remover Selecionado.
-let apagaSelecionado = document.getElementById('remover-selecionado');
-apagaSelecionado.addEventListener('click', removeSelecionado);
-
-// Função para remover finalizados.
-function removeSelecionado() {
-  let selecionado = document.querySelectorAll('.elemento-cinza');
-  let ol = document.getElementById('lista-tarefas');
-  if (selecionado.length > 0) {
-    for (let i = 0; i < selecionado.length; i += 1) {
-      if (selecionado[i]) {
-        ol.removeChild(selecionado[i]);
-      }
+      backupSelecionado = listaArray[indexSelecionado];
+      listaArray.splice(indexSelecionado, 1);
+      listaArray.splice(indexSelecionado + 1, 0, backupSelecionado);
+      listaArray.forEach((item) => {
+        ol.appendChild(item);
+      })
     }
   } else {
-    alert('Não tem tarefas selecionada.');
+    alert('Não há elemento selecionado')
   }
 }
+
+// Implementação do botão mover para baixo.
+document.getElementById('mover-baixo')
+  .addEventListener('click', moveBaixo);
+
+
+// remover selecionado
+
+function removerSelecionado() {
+  const elementoCinza = document.querySelector('.elemento-cinza');
+  const listaArray = Array.from(document.getElementById('lista-tarefas').childNodes);
+  const indexSelecionado = listaArray.indexOf(elementoCinza);
+  if (elementoCinza) {
+    listaArray.splice(indexSelecionado, 1);
+    ol.innerHTML = '';
+    listaArray.forEach((item) => {
+      ol.appendChild(item);
+    })
+
+    const storage = JSON.parse(localStorage.getItem('listaDeLi'));
+    storage.splice(indexSelecionado, 1);
+    localStorage.setItem('listaDeLi', JSON.stringify(storage));
+  } else {
+    alert('Nenhuma tarefa selecionada');
+  }
+};
+
+document.getElementById('remover-selecionado')
+  .addEventListener('click', removerSelecionado);

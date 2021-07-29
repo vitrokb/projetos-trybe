@@ -8,11 +8,13 @@ body {
   justify-content: center;
   align-items: center;
   height: 100%;
+  overflow: hidden;
 }
 
 .elemento-cinza {
   background-color: rgb(128 ,128 ,128);
 }
+
 .completed {
   text-decoration: line-through;
 }
@@ -38,13 +40,21 @@ body {
   border-radius: 10px;
 }
 
-.adicionar label {
+.adicionar-label {
   margin-right: 6px;
 }
-.adicionar input {
-  margin-right: 6px;
+
+.adicionar-input {
   border-radius: 3px;
-  border: solid darkgray;
+  border: 1px solid darkgray;
+  border-radius: 3px;
+  margin-right: 6px;
+  padding: 5px;
+}
+
+.adicionar-button {
+  border-radius: 6px;
+  padding: 4px;
 }
 
 .lista-estilo {
@@ -53,7 +63,8 @@ body {
   align-items: flex-start;
   justify-content: flex-start;
   margin: 25px;
-  border: 2px dashed darkgray;
+  border: 2px solid darkgray;
+  border-radius: 8px;
   background-color:white;
   padding: 0 30px 0 0;
 }
